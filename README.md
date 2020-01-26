@@ -2,7 +2,7 @@
 
 ### BD - PostgreSQL
 
-![Modelo ER]( educacion ER.png "titulo" )
+![Modelo ER]( https://gitlab.com/josedanielcruzc/educacion-bootback/blob/master/educacion%20ER.png "titulo" )
 
 ### Presentacion en Angular 7 , Html, bootstrap
 ### Construccion Maven
