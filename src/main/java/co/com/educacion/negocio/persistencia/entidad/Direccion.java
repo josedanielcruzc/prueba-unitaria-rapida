@@ -44,7 +44,7 @@ public class Direccion implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String pais;
 
-	@OneToOne(mappedBy = "direccionBean")
+	@OneToOne(mappedBy = "direccion")
 	private Persona persona;
 
 	public Direccion() {

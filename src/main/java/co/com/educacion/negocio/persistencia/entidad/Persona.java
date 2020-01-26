@@ -41,7 +41,7 @@ public class Persona implements Serializable {
 	// bi-directional many-to-one association to Direccion
 	@OneToOne
 	@JoinColumn(name = "direccion", referencedColumnName = "codigo")
-	private Direccion direccionBean;
+	private Direccion direccion;
 
 	public Persona() {
 	}
@@ -78,12 +78,12 @@ public class Persona implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public Direccion getDireccionBean() {
-		return this.direccionBean;
+	public Direccion getDireccion() {
+		return this.direccion;
 	}
 
-	public void setDireccionBean(Direccion direccionBean) {
-		this.direccionBean = direccionBean;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 }
