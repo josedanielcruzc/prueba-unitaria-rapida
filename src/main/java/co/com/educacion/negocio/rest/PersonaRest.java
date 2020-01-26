@@ -28,7 +28,7 @@ public class PersonaRest {
 	PersonaServicio personaServicio;
 
 	@GetMapping
-	public List<PersonaTO> clientes() {
+	public List<PersonaTO> personas() {
 		return personaServicio.obtenerTodo();
 	}
 
