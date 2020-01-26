@@ -2,7 +2,7 @@
 
 ### BD - PostgreSQL
 
-![Modelo ER]( https://gitlab.com/josedanielcruzc/educacion-bootback/blob/master/educacion%20ER.png "titulo" )
+![Modelo ER]( educacion_ER.png )
 
 ### Presentacion en Angular 7 , Html, bootstrap
 ### Construccion Maven
@@ -27,7 +27,7 @@ Con el CLI de angular 7 instalado, ubicarse en la carpeta del proyecto, ejecutar
 # Capas de la aplicacion
 
 
-![Modelo de capas con MVC]( https://gitlab.com/josedanielcruzc/educacion-bootback/blob/master/Modelo%20de%20capas%20con%20MVC.png )
+![Modelo de capas con MVC]( Modelo-de-capas-con-MVC.png )
 
 
 Se utiliza un modelo de capas y un modelado MVC donde : 
