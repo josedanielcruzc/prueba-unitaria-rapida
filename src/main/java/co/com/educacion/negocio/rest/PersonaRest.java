@@ -48,7 +48,7 @@ public class PersonaRest extends GeneralRest {
 		return new ResponseEntity<>(personaServicio.agregar(p), HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PostMapping("/actualizar")
 	@Validated(OnUpdate.class)
 	public ResponseEntity<Object> editar(@Valid @RequestBody PersonaTO p) {
 		logger.info("La persona update: " + p.toString());
