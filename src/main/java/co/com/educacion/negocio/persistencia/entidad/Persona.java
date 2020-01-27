@@ -39,7 +39,7 @@ public class Persona implements Serializable {
 	private Integer telefono;
 
 	// bi-directional many-to-one association to Direccion
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "direccion", referencedColumnName = "codigo")
 	private Direccion direccion;
 

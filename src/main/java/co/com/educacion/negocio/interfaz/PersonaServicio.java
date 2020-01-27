@@ -10,4 +10,8 @@ public interface PersonaServicio {
 
 	PersonaTO agregar(PersonaTO p);
 
+	public PersonaTO editar(PersonaTO p);
+
+	public void eliminar(PersonaTO p);
+
 }

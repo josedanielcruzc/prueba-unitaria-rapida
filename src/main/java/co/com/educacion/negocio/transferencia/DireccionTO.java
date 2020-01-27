@@ -2,19 +2,47 @@ package co.com.educacion.negocio.transferencia;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+import co.com.educacion.manejador.OnCreate;
+import co.com.educacion.manejador.OnUpdate;
 import co.com.educacion.negocio.persistencia.entidad.Direccion;
 
 public class DireccionTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(groups = { OnUpdate.class }, message = "odigo obligatorio")
+	@NotNull(groups = { OnUpdate.class }, message = "codigo obligatorio")
+	@Length(groups = { OnUpdate.class }, min = 6, max = 6, message = "cantidad de caracteres permitidos 6")
+	private String codigo;
+
+	@NotBlank(groups = { OnUpdate.class, OnCreate.class }, message = "calle obligatoria")
+	@NotNull(groups = { OnUpdate.class, OnCreate.class }, message = "calle obligatoria")
+	@Length(groups = { OnUpdate.class,
+			OnCreate.class }, min = 1, max = 100, message = "cantidad maxima de caracteres 100")
 	private String calle;
 
+	@NotBlank(groups = { OnUpdate.class, OnCreate.class }, message = "calle obligatoria")
+	@NotNull(groups = { OnUpdate.class, OnCreate.class }, message = "calle obligatoria")
+	@Length(groups = { OnUpdate.class,
+			OnCreate.class }, min = 1, max = 100, message = "cantidad maxima de caracteres 100")
 	private String ciudad;
 
 	private String codigoPostal;
 
+	@NotBlank(groups = { OnUpdate.class, OnCreate.class }, message = "estado obligatorio")
+	@NotNull(groups = { OnUpdate.class, OnCreate.class }, message = "estado obligatorio")
+	@Length(groups = { OnUpdate.class,
+			OnCreate.class }, min = 1, max = 100, message = "cantidad maxima de caracteres 100")
 	private String estado;
 
+	@NotBlank(groups = { OnUpdate.class, OnCreate.class }, message = "pais obligatorio")
+	@NotNull(groups = { OnUpdate.class, OnCreate.class }, message = "pais obligatorio")
+	@Length(groups = { OnUpdate.class,
+			OnCreate.class }, min = 1, max = 100, message = "cantidad maxima de caracteres 100")
 	private String pais;
 
 	public DireccionTO() {
@@ -60,10 +88,20 @@ public class DireccionTO implements Serializable {
 		this.pais = pais;
 	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Direccion [calle=");
+		builder.append("DireccionTO [codigo=");
+		builder.append(codigo);
+		builder.append(", calle=");
 		builder.append(calle);
 		builder.append(", ciudad=");
 		builder.append(ciudad);
@@ -84,6 +122,7 @@ public class DireccionTO implements Serializable {
 		d.setCodigoPostal(this.codigoPostal);
 		d.setEstado(this.estado);
 		d.setPais(this.pais);
+		d.setCodigo(this.codigo);
 		return d;
 	}
 
@@ -94,6 +133,7 @@ public class DireccionTO implements Serializable {
 		d.setCodigoPostal(dir.getCodigoPostal());
 		d.setEstado(dir.getEstado());
 		d.setPais(dir.getPais());
+		d.setCodigo(dir.getCodigo());
 		return d;
 	}
 

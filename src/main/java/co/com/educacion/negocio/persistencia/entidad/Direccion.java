@@ -8,7 +8,6 @@ import org.hibernate.annotations.Parameter;
 
 import co.com.educacion.manejador.PrefijoSecuenciaIdGenerador;
 
-
 /**
  * The persistent class for the direccion database table.
  * 
@@ -44,7 +43,7 @@ public class Direccion implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String pais;
 
-	@OneToOne(mappedBy = "direccion")
+	@OneToOne(mappedBy = "direccion", cascade = CascadeType.ALL)
 	private Persona persona;
 
 	public Direccion() {
