@@ -1,4 +1,4 @@
-# obligaciones
+# Educacion
 
 ### BD - PostgreSQL
 
@@ -35,3 +35,29 @@ Se utiliza un modelo de capas y un modelado MVC donde :
 ## 1 Presentacion
 
 Se centra en la utilizacion de **Angular** para soportar **Vista - Controlador** dejando a un lado la complejidad de negocio detras de la siguiente capa.
+
+#### artefactos : 
+Modulo  y componentes de angular.
+
+## 2 Servicio
+
+Esta capa utiliza **Spring boot** para exponer los servicios ocultando la complejidad y logica de negocio, dando flexibilidad al desarrollo, de esta forma se puede cambiar la capa de presentacion facilmente.
+
+#### artefactos : 
+Modulo Spring-Boot con sus clases **@RestControler** co.com.obligacion.servicio.rest.
+
+## 3 Dominio 
+
+Para manejar logica de negocio 
+
+#### artefactos : 
+Interfaces co.com.obligacion.negocio.interfaz y clases co.com.obligacion.negocio.implementacion tipo **@Service**.
+
+
+## 4 Acceso a Datos 
+
+Capa dedicada unicamente a persistencia de datos utilizando **Spring Data-JPA** 
+
+#### artefactos : 
+Entidades co.com.obligacion.negocio.persistencia.entidad tipo **@Entity** 
+Interfaces co.com.obligacion.negocio.implementacion tipo **@Repository**.
