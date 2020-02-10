@@ -22,7 +22,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter  {
                 .httpBasic();
     }
 
-    @Autowired
+   /* @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception
     {
@@ -30,7 +30,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter  {
                 .withUser("usuario")
                 .password("{noop}password")
                 .roles("USER");
-    }
+    }*/
 
 }
 
