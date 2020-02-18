@@ -17,20 +17,20 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter  {
     {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and()
-                .httpBasic();
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                ;
     }
 
-   /* @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception
-    {
-        auth.inMemoryAuthentication()
-                .withUser("usuario")
-                .password("{noop}password")
-                .roles("USER");
-    }*/
+//   @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth)
+//            throws Exception
+//    {
+//        auth.inMemoryAuthentication()
+//                .withUser("usuario")
+//                .password("{noop}password")
+//                .roles("USER");
+//    }
 
 }
 

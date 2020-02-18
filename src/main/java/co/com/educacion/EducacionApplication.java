@@ -1,18 +1,11 @@
 package co.com.educacion;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.tags.Tag;
-
 
 @SpringBootApplication
 public class EducacionApplication {
@@ -22,27 +15,50 @@ public class EducacionApplication {
     }
 
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
-            }
-        };
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("**").allowedOrigins("*");
+			}
+		};
+	}
+	
+	
+	@Bean
+	public GroupedOpenApi personaOpenApi() {
+		String[] paths = { "/persona*" };
+		String[] packagedToMatch = { "co.com.educacion.negocio.rest" };
+		return GroupedOpenApi.builder().setGroup("Persona lectura").pathsToMatch(paths).packagesToScan(packagedToMatch)
+				.build();
+	}
+	
+	@Bean
+	public GroupedOpenApi personaOpenApiAdmin() {
+		String[] paths = { "/persona/*" };
+		String[] packagedToMatch = { "co.com.educacion.negocio.rest" };
+		return GroupedOpenApi.builder().setGroup("Persona Admin").pathsToMatch(paths).packagesToScan(packagedToMatch)
+				.build();
+	}
+	
 
-	/*@Bean
-	public OpenAPI customOpenAPI() {
-		return new OpenAPI().
-				components(
-						new Components().addSecuritySchemes(
-								"basicScheme", new SecurityScheme().type( SecurityScheme.Type.HTTP).scheme("basic")
-						)
-				)
-				.info( new Info().title("API personas").version("1.0"))
-				.addTagsItem( new Tag().name("mi tag") );
+//							.addSecuritySchemes(
+//									"basicScheme", 
+//									new SecurityScheme()
+//										.type( 
+//												SecurityScheme.Type.HTTP )
+//										.scheme("basic") )
 
-	}*/
 
-    }
 }
+
+
+
+
+
+
+
+
+
+
