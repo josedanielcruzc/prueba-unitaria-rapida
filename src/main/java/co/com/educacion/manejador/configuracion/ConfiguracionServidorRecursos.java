@@ -17,8 +17,12 @@ public class ConfiguracionServidorRecursos extends ResourceServerConfigurerAdapt
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.resourceId("recursos-server-rest-api").authenticationManager(authenticationManagerBean())
-				.tokenExtractor(new ExtractorTokensPersonalizado());
+		resources
+			.resourceId("recursos-server-rest-api")
+			.stateless(false)
+			.authenticationManager(authenticationManagerBean())
+			.tokenExtractor(new ExtractorTokensPersonalizado()
+						);
 	}
 
 	@Bean
@@ -36,8 +40,36 @@ public class ConfiguracionServidorRecursos extends ResourceServerConfigurerAdapt
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().disable().anonymous().and().authorizeRequests().antMatchers("/user/**").authenticated()
-				.antMatchers("/public/**").permitAll();
+
+		http
+		.csrf().disable()
+//		.anonymous( anonymous -> { 
+//			anonymous.authorities("ROLE_ANONIMO"); 
+//			})
+		.headers().frameOptions().disable()
+		.and().authorizeRequests()
+		.antMatchers("/swagger-ui/**").permitAll()
+		.antMatchers("/documentacion-api/**").permitAll()
+		.anyRequest().authenticated()
+		;
+
 	}
 
+	
+	
+
+	
+//		.and().authorizeRequests()
+//		.antMatchers( HttpMethod.POST, "/persona*").access("hasRole('USUARIO')")
+//		.antMatchers("/admin", "/admin/oauth").access("hasRole('USUARIO') and hasRole('ADMIN') ")
+//		.anyRequest().authenticated()
+//		.and().formLogin().permitAll()
+//		.and().logout().permitAll()
+//		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
+//		;
+//	}
+	
+	
+	
+	
 }

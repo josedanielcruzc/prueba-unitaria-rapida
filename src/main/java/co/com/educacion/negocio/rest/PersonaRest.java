@@ -32,6 +32,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -96,18 +101,19 @@ public class PersonaRest extends GeneralRest {
 	@Autowired
 	PersonaServicio personaServicio;
 
-	@Operation(
-			summary = "traer todas las personas", 
+	@Operation(summary = "traer todas las personas",
 			description = "api para traer todas las personas, aqui no se tienen en cuenta paginaciones, ni filtros, trae todos los registros", 
-			security = {
-					@SecurityRequirement(
-							name = "personas_auth2",
-							scopes = { "ESCRITURA", "LECTURA" }
-							) 
+			security = {@SecurityRequirement(
+					name = "personas_auth2",
+					scopes = { "ESCRITURA", "LECTURA" }) 
 					}, 
-			tags = { "persona" }
-			)
-	@PreAuthorize("#oauth2.hasAnyScope('LECTURA')")
+			tags = { "persona" } )
+	@ApiResponses(
+			value = {
+					@ApiResponse(responseCode = "200",description = "Operación exitosa",content = @Content( mediaType = "application/json", array = @ArraySchema( schema = @Schema( implementation = PersonaTO.class ) ) ) ),
+					@ApiResponse(responseCode = "401", description = "Sin autorización",content = @Content( mediaType = "application/json", schema =  @Schema ( implementation = Object.class )  ) ),
+	})
+	@PreAuthorize("#oauth2.hasAuthority('LECTURA')")
 	@GetMapping
 	public List<PersonaTO> personas() {
 		return personaServicio.obtenerTodo();

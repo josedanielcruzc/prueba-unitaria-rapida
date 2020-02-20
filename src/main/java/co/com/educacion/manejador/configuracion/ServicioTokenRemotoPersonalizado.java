@@ -23,7 +23,6 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-import co.com.educacion.negocio.rest.PersonaRest;
 
 public class ServicioTokenRemotoPersonalizado implements ResourceServerTokenServices {
 
@@ -53,21 +52,17 @@ public class ServicioTokenRemotoPersonalizado implements ResourceServerTokenServ
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> map = executeGet("http://localhost:8081/oauth/check_token?token=" + accessToken, headers);
 
-		logger.error("daniel ");
-		logger.error("mapa : " + (map != null ? (map.isEmpty() ? "vacio" : "no vacio") : "NULO"));
-
-		if (map != null) {
+		String error = "";
+		if (map == null || map.isEmpty()) {
+			error = "Sin autorización";
+		} else {
 			for (Map.Entry<String, Object> pair : map.entrySet()) {
 				logger.error("maps : " + pair.getKey() + ", " + pair.getValue());
 			}
+				error = map.containsKey("error") ? map.get("error").toString() : "";				
 		}
-
-		String error = "Token not allowed";
-		if (map == null || map.isEmpty() || map.get("error") != null) {			
-			error = map.get("error") != null ? (String) map.get("error") : "Token not allowed";
-		}else {
-			throw new InvalidTokenException(error);
-			
+		if (error.trim().length() > 0) {
+			throw new InvalidTokenException( error );
 		}
 		return tokenConverter.extractAuthentication(map);
 	}
