@@ -29,6 +29,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
+
+
+		<!-- SPRING SECURITY -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -42,13 +45,26 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
-
-		<!-- No necesaria, springdoc-openapi-ui ya la integra-->
+		<!-- SPRING SECURITY - ServerResource -->
 <!-- 		<dependency> -->
-<!-- 			<groupId>org.springdoc</groupId> -->
-<!-- 			<artifactId>springdoc-openapi-core</artifactId> -->
-<!-- 			<version>1.1.49</version> -->
+<!-- 			<groupId>org.springframework.security.oauth</groupId> -->
+<!-- 			<artifactId>spring-security-oauth2</artifactId> -->
+<!-- 			<version>2.4.0.RELEASE</version> -->
 <!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+			<version>2.2.4.RELEASE</version>
+		</dependency>
+
+
+		<!-- SPRING DOC -->
+		<!-- No necesaria, springdoc-openapi-ui ya la integra -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springdoc</groupId> -->
+		<!-- <artifactId>springdoc-openapi-core</artifactId> -->
+		<!-- <version>1.1.49</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
@@ -59,9 +75,9 @@
 			<artifactId>springdoc-openapi-security</artifactId>
 			<version>1.2.30</version>
 		</dependency>
-		
-		
-		
+
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
