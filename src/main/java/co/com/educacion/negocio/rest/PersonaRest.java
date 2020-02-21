@@ -105,7 +105,7 @@ public class PersonaRest extends GeneralRest {
 			description = "api para traer todas las personas, aqui no se tienen en cuenta paginaciones, ni filtros, trae todos los registros", 
 			security = {@SecurityRequirement(
 					name = "personas_auth2",
-					scopes = { "ESCRITURA", "LECTURA" }) 
+					scopes = { "ROLE_LECTURA", "ROLE_ESCRITURA" }) 
 					}, 
 			tags = { "persona" } )
 	@ApiResponses(
@@ -113,7 +113,7 @@ public class PersonaRest extends GeneralRest {
 					@ApiResponse(responseCode = "200",description = "Operación exitosa",content = @Content( mediaType = "application/json", array = @ArraySchema( schema = @Schema( implementation = PersonaTO.class ) ) ) ),
 					@ApiResponse(responseCode = "401", description = "Sin autorización",content = @Content( mediaType = "application/json", schema =  @Schema ( implementation = Object.class )  ) ),
 	})
-	@PreAuthorize("#oauth2.hasAuthority('LECTURA')")
+	@PreAuthorize("#oauth2.hasScope('LECTURA')")
 	@GetMapping
 	public List<PersonaTO> personas() {
 		return personaServicio.obtenerTodo();
