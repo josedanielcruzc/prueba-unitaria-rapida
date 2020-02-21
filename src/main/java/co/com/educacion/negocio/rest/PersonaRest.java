@@ -65,10 +65,13 @@ import org.springframework.validation.annotation.Validated;
 					version = "otra"
 					
 				),
-		security = {
+		security = {  // Si todas las operaciones de API requieren los mismos ámbitos, puede agregar seguridad en el nivel raíz de la definición de API.
 				@SecurityRequirement(
 						name = "personas_auth2",
-						scopes = { "escritura", "lectura" }
+						scopes = { 
+//								"ESCRITURA", 
+								"LECTURA" 
+								}
 						) 
 		}		
 		)
@@ -78,19 +81,21 @@ import org.springframework.validation.annotation.Validated;
 		flows = @OAuthFlows(
 				
 				implicit = @OAuthFlow(
-//						redirect_uri=http://localhost:8080
-//						https://estudiantes.aha.io/oauth/authorize?client_id=654c3658029e98044ebc71ad9850c2bb383947c8813128451b8830eaf4439b90&redirect_uri=https%3A%2F%2Flocalhost%3A8080%2F&response_type=token
 						authorizationUrl = "http://localhost:8081/oauth/authorize", 
-//								authorizationUrl = "http://172.17.7.192:8763/platform-security/oauth/token"
 						scopes = {
 								@OAuthScope(name = "ESCRITURA", description = "modificar las personas"),
-								@OAuthScope(name = "LECTURA", description = "leer las personas"),								
+								@OAuthScope(name = "LECTURA", description = "leer las personas"),
+								@OAuthScope(name = "OTROPERMISO", description = "leer las personas"),
 								}
-//						tokenUrl = "https://login.microsoftonline.com/ce35a8ea-e13d-4d26-8749-ef685f99173c/oauth2/token"
 						)
 				)
 		)
 @Tag(name = "persona", description = "API para personas")
+@ApiResponses(
+		value = {
+				@ApiResponse(responseCode = "401", description = "Sin autorización",content = @Content( mediaType = "application/json", schema =  @Schema ( implementation = Object.class )  ) ),
+				@ApiResponse(responseCode = "403", description = "Alcance insuficiente",content = @Content( mediaType = "application/json", schema =  @Schema ( implementation = Object.class )  ) ),
+})
 @RestController
 @RequestMapping("persona")
 @Validated
@@ -104,24 +109,46 @@ public class PersonaRest extends GeneralRest {
 	@Operation(summary = "traer todas las personas",
 			description = "api para traer todas las personas, aqui no se tienen en cuenta paginaciones, ni filtros, trae todos los registros", 
 			security = {@SecurityRequirement(
-					name = "personas_auth2",
-					scopes = { "ESCRITURA", "LECTURA" }) 
+					name = "personas_auth2"
+					,
+					scopes = {  // 	Enumere los ámbitos requeridos por cada operación en la sección de seguridad de esa operación, 
+								//  Aqui se sobrescriben los ambitos enumerados en la seccion global
+							"LECTURA" }
+					) 
 					}, 
 			tags = { "persona" } )
 	@ApiResponses(
 			value = {
 					@ApiResponse(responseCode = "200",description = "Operación exitosa",content = @Content( mediaType = "application/json", array = @ArraySchema( schema = @Schema( implementation = PersonaTO.class ) ) ) ),
-					@ApiResponse(responseCode = "401", description = "Sin autorización",content = @Content( mediaType = "application/json", schema =  @Schema ( implementation = Object.class )  ) ),
 	})
-	@PreAuthorize("#oauth2.hasAuthority('LECTURA')")
+	@PreAuthorize("#oauth2.hasScope('LECTURA')")
 	@GetMapping
 	public List<PersonaTO> personas() {
 		return personaServicio.obtenerTodo();
 	}
 
+	@Operation(summary = "agregar persona",
+			description = "api para agregar una persona.", 
+			security = {@SecurityRequirement(
+					name = "personas_auth2"
+					,
+					scopes = {
+							"OTROPERMISO",
+							"ESCRITURA" 
+							}
+					) 
+					}, 
+			tags = { "persona" } )
+	@ApiResponses(
+			value = {
+					@ApiResponse(responseCode = "200",description = "Operación exitosa",content = @Content( mediaType = "application/json", schema = @Schema( implementation = PersonaTO.class )  ) ),
+	}) //	@PreAuthorize("#oauth2.hasScope('ESCRITURA') or #oauth2.hasScope('OTROPERMISO') ")
 	@PostMapping
 	@Validated(OnCreate.class)
-	public ResponseEntity<Object> agregar(@Valid @RequestBody PersonaTO p) {
+	public ResponseEntity<Object> agregar(
+			@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Crea una nueva persona", required = true)  
+			@Valid @RequestBody PersonaTO p ) 
+	{
 		logger.info("La persona : " + p.toString());
 		return new ResponseEntity<>(personaServicio.agregar(p), HttpStatus.OK);
 	}

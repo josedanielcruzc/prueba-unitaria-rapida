@@ -43,9 +43,6 @@ public class ConfiguracionServidorRecursos extends ResourceServerConfigurerAdapt
 
 		http
 		.csrf().disable()
-//		.anonymous( anonymous -> { 
-//			anonymous.authorities("ROLE_ANONIMO"); 
-//			})
 		.headers().frameOptions().disable()
 		.and().authorizeRequests()
 		.antMatchers("/swagger-ui/**").permitAll()
