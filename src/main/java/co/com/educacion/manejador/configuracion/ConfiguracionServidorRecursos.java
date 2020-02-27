@@ -3,6 +3,7 @@ package co.com.educacion.manejador.configuracion;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -17,6 +18,7 @@ public class ConfiguracionServidorRecursos extends ResourceServerConfigurerAdapt
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+				
 		resources
 			.resourceId("recursos-server-rest-api")
 			.stateless(false)
@@ -45,10 +47,13 @@ public class ConfiguracionServidorRecursos extends ResourceServerConfigurerAdapt
 		.csrf().disable()
 		.headers().frameOptions().disable()
 		.and().authorizeRequests()
+		.antMatchers("/api-doc/**").permitAll()
+		.antMatchers("/swagger-ui.html").permitAll()
 		.antMatchers("/swagger-ui/**").permitAll()
-		.antMatchers("/documentacion-api/**").permitAll()
 		.anyRequest().authenticated()
 		;
+		
+		
 
 	}
 

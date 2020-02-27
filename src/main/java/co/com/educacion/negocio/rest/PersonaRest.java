@@ -85,7 +85,6 @@ import org.springframework.validation.annotation.Validated;
 						scopes = {
 								@OAuthScope(name = "ESCRITURA", description = "modificar las personas"),
 								@OAuthScope(name = "LECTURA", description = "leer las personas"),
-								@OAuthScope(name = "OTROPERMISO", description = "leer las personas"),
 								}
 						)
 				)
@@ -142,7 +141,8 @@ public class PersonaRest extends GeneralRest {
 	@ApiResponses(
 			value = {
 					@ApiResponse(responseCode = "200",description = "Operación exitosa",content = @Content( mediaType = "application/json", schema = @Schema( implementation = PersonaTO.class )  ) ),
-	}) //	@PreAuthorize("#oauth2.hasScope('ESCRITURA') or #oauth2.hasScope('OTROPERMISO') ")
+	})
+	@PreAuthorize("#oauth2.hasScope('ESCRITURA') or #oauth2.hasScope('OTROPERMISO') ")
 	@PostMapping
 	@Validated(OnCreate.class)
 	public ResponseEntity<Object> agregar(
