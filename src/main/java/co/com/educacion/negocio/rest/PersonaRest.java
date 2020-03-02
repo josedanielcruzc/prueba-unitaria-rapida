@@ -132,7 +132,6 @@ public class PersonaRest extends GeneralRest {
 					name = "personas_auth2"
 					,
 					scopes = {
-							"OTROPERMISO",
 							"ESCRITURA" 
 							}
 					) 
