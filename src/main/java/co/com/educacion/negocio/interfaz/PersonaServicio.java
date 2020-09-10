@@ -12,6 +12,6 @@ public interface PersonaServicio {
 
 	public PersonaTO editar(PersonaTO p);
 
-	public void eliminar(PersonaTO p);
+	public boolean eliminar(PersonaTO p);
 
 }

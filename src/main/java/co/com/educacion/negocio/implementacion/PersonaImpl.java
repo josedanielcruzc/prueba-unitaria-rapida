@@ -43,8 +43,9 @@ public class PersonaImpl implements PersonaServicio {
 	}
 
 	@Transactional
-	public void eliminar(PersonaTO p) {
-			personaRep.deleteById(p.getCodigo());
+	public boolean eliminar(PersonaTO p) {
+			//personaRep.deleteById(p.getCodigo());
+			return true;
 	}
 
 }
